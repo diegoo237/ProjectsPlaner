@@ -1,0 +1,26 @@
+.container {
+  padding: 1.5rem;
+  padding-bottom: 0;
+  background-color: black;
+  width: 30rem;
+  height: auto;
+}
+.newProject {
+  width: 100%;
+  height: 3.3rem;
+  background-color: #fff;
+  border: none;
+  margin-bottom: 2rem;
+}
+.project {
+  background-color: rgb(205, 178, 178);
+  min-height: 5rem;
+  display: flex;
+  align-items: center;
+}
+.prazo {
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  background-color: aqua;
+}

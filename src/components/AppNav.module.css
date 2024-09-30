@@ -1,0 +1,20 @@
+.nav {
+  width: 100%;
+  padding: 2rem;
+  background-color: #e53939;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav:hover {
+  cursor: pointer;
+}
+.nav a:visited,
+.nav a:link {
+  color: #fff;
+  text-decoration: none;
+}
+.ul {
+  display: flex;
+  gap: 2rem;
+}
