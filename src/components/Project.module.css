@@ -1,0 +1,41 @@
+.content {
+  min-height: 5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+.content div {
+  display: flex;
+  gap: 1.2rem;
+}
+.tag {
+  background-color: brown;
+
+  border-radius: 0.4rem;
+  padding: 0.2rem;
+
+  margin-bottom: 1.5rem;
+
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  grid-row: 2/3;
+  grid-column: 1;
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+.prazo {
+  border-top: solid 0.8px rgba(0, 0, 0, 0.109);
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+}
+.project {
+  border-radius: 0.2rem;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
+}

@@ -3,7 +3,7 @@
   --color-brand--2: #ffffff;
   --color-brand--2: #000000;
 
-  --color-dark--0: #242a2e;
+  --color-dark--0: #323130;
   --color-dark--1: #2d3439;
   --color-dark--2: #42484d;
   --color-light--1: #aaa;
@@ -22,8 +22,8 @@ html {
 }
 
 body {
-  font-family: "Manrope", sans-serif;
-  color: var(--color-light--2);
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  color: var(--color-light--0);
   font-weight: 400;
   line-height: 1.6;
 }
