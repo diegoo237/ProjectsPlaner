@@ -1,20 +1,32 @@
 import styles from "./Project.module.css"; // Adicione a importação de estilos
 import PropTypes from "prop-types";
+import OptionsBtn from "./OptionsBtn";
+import dateIcon from "../../assets/dateIcon.svg";
 
 function Project({ projectList, onRemoveProject }) {
   return (
     <>
       {projectList.map((project) => (
-        <aside key={project.key} className={styles.project}>
+        <section key={project.key} className={styles.project}>
           <div className={styles.content}>
-            <span className={styles.tag}>{project.tag}</span>
-            <div>
+            <header>
+              <span className={styles.tag}>{project.tag}</span>
+              <OptionsBtn
+                projectKey={project.key}
+                onRemoveProject={onRemoveProject}
+              />
+            </header>
+            <main>
               <p className={styles.title}>{project.title}</p>
-            </div>
+            </main>
           </div>
-          <div className={styles.prazo}>{project.prazo}</div>
-          <button onClick={() => onRemoveProject(project.key)}>Remover</button>
-        </aside>
+
+          <footer>
+            <div className={styles.prazo}>
+              <img src={dateIcon} alt="" /> {project.prazo}
+            </div>
+          </footer>
+        </section>
       ))}
     </>
   );

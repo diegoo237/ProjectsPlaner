@@ -1,0 +1,13 @@
+.addProjectForm {
+  z-index: 100;
+  background-color: #333;
+  width: 90rem;
+  height: 70rem;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+.addProjectForm input {
+  background-color: #fff;
+}

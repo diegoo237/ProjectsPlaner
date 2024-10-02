@@ -1,6 +1,6 @@
 import styles from "./ProjectState.module.css";
 import PropTypes from "prop-types";
-import Project from "../components/Project";
+import Project from "../components/project/Project";
 import AdProjectBtn from "./AdProjectBtn";
 
 function ProjectState({ station, projects, onRemoveProject }) {

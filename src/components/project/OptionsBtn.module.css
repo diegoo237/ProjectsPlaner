@@ -1,0 +1,27 @@
+.options {
+  position: absolute;
+  top: 4rem;
+  left: 12rem;
+
+  width: 14rem;
+
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
+  background-color: #fff;
+
+  list-style: none;
+}
+
+.btn {
+  background-color: #fff;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.btn:hover {
+  cursor: pointer;
+}
+.btn img {
+  height: 1.7rem;
+}

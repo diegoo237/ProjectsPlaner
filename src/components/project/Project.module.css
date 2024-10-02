@@ -1,0 +1,65 @@
+.project {
+  position: relative;
+  border-radius: 0.2rem;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
+}
+.content {
+  min-height: 5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+.content header {
+  display: flex;
+  justify-content: space-between;
+}
+.content header button {
+  border: none;
+}
+.tag {
+  background-color: brown;
+
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.6rem;
+
+  margin-bottom: 1.5rem;
+
+  font-size: 1rem;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  grid-row: 2/3;
+  grid-column: 1;
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+
+.project footer {
+  border-top: solid 0.8px rgba(0, 0, 0, 0.109);
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+.project footer img {
+  height: 1.8rem;
+}
+.prazo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.prazo_late {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  background-color: var(--color-brand--1);
+}

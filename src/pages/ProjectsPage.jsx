@@ -35,14 +35,21 @@ const initialProjects = [
   },
 ];
 
+const ADD_PROJECT = "addProject";
+const REMOVE_PROJECT = "removeProject";
+
+function filterProjectsByState(projects, stateId) {
+  return projects.filter((project) => project.id === stateId);
+}
+
 function reducer(state, action) {
   switch (action.type) {
-    case "addProject":
+    case ADD_PROJECT:
       return {
         ...state,
         projects: [...state.projects, action.payload],
       };
-    case "removeProject":
+    case REMOVE_PROJECT:
       return {
         ...state,
         projects: state.projects.filter(
@@ -64,8 +71,9 @@ function ProjectPage() {
       <main className={styles.main}>
         {projectStates.map((station) => {
           // Filtrando os projetos de acordo com o ID do estado (station.id)
-          const filteredProjects = state.projects.filter(
-            (project) => project.id === station.id
+          const filteredProjects = filterProjectsByState(
+            state.projects,
+            station.id
           );
 
           return (
@@ -75,7 +83,7 @@ function ProjectPage() {
               id={station.id}
               projects={filteredProjects}
               onRemoveProject={(key) =>
-                dispatch({ type: "removeProject", payload: key })
+                dispatch({ type: REMOVE_PROJECT, payload: key })
               }
             />
           );
