@@ -12,7 +12,7 @@ function AppNav() {
           <h3>Dashboard</h3>
         </NavLink>
         <NavLink to="/projects">
-          <h3>Projetos</h3>
+          <h3>Planer</h3>
         </NavLink>
       </ul>
     </nav>

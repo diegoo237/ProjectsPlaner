@@ -64,6 +64,18 @@ function reducer(state, action) {
 function ProjectPage() {
   const [state, dispatch] = useReducer(reducer, { projects: initialProjects });
 
+  const handleAddProject = (stationId) => {
+    const newProject = {
+      id: stationId, // O estado da nova estação
+      key: Date.now(), // Gerar uma chave única com base na data atual
+      tag: "Novo Projeto", // Pode personalizar ou receber do usuário
+      title: "Título do Novo Projeto", // Pode ser um input dinâmico
+      prazo: 10, // Prazo fictício, também pode ser dinâmico
+    };
+
+    dispatch({ type: ADD_PROJECT, payload: newProject });
+  };
+
   return (
     <>
       <AppNav />
@@ -85,6 +97,7 @@ function ProjectPage() {
               onRemoveProject={(key) =>
                 dispatch({ type: REMOVE_PROJECT, payload: key })
               }
+              onAddProject={() => handleAddProject(station.id)}
             />
           );
         })}

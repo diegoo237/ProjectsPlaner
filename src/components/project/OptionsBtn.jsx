@@ -11,7 +11,6 @@ function OptionsBtn({ onRemoveProject, projectKey }) {
   const toggleVisibility = () => {
     setIsVisible((prevIsVisible) => !prevIsVisible);
   };
-
   return (
     <>
       <button onClick={toggleVisibility} className={styles.btn}>
@@ -41,4 +40,6 @@ export default OptionsBtn;
 OptionsBtn.propTypes = {
   onRemoveProject: PropTypes.func.isRequired,
   projectKey: PropTypes.number.isRequired,
+  toggleVisibility: PropTypes.func,
+  isVisible: PropTypes.func,
 };

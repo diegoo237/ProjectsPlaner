@@ -1,20 +1,17 @@
+import PropTypes from "prop-types";
 import styles from "./AdProjectBtn.module.css";
-import AdProjectForm from "./project/AdProjectForm";
-import { useState } from "react";
 
-function AdProjectBtn() {
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => {
-    setIsVisible((prevIsVisible) => !prevIsVisible);
-  };
-
+function AdProjectBtn({ toggleVisibility }) {
   return (
     <>
       <button onClick={toggleVisibility} className={styles.newProject}>
         + Adicionar Projeto
       </button>
-      <AdProjectForm isVisible={isVisible} />
     </>
   );
 }
 export default AdProjectBtn;
+
+AdProjectBtn.propTypes = {
+  toggleVisibility: PropTypes.func.isRequired,
+};
