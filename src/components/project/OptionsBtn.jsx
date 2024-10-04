@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import trashICon from "../../assets/trashICon.svg";
+import trashIcon from "../../assets/trashIcon.svg";
 import tagIcon from "../../assets/tagIcon.svg";
 import pointIcon from "../../assets/pointsIcon.svg";
 import styles from "./OptionsBtn.module.css";
@@ -28,7 +28,7 @@ function OptionsBtn({ onRemoveProject, projectKey }) {
             onClick={() => onRemoveProject(projectKey)}
             className={styles.btn}
           >
-            <img src={trashICon} /> Excluir
+            <img src={trashIcon} /> Excluir
           </button>
         </li>
       </ul>
