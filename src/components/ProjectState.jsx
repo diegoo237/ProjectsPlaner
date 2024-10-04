@@ -35,7 +35,7 @@ function ProjectState({ station, projects, onRemoveProject, onAddProject }) {
       <AdProjectForm
         isVisible={isVisible}
         componentRef={componentRef}
-        onAddProject={onAddProject}
+        onAddProject={(newProject) => onAddProject(newProject)}
       />
       {projects.length > 0 ? (
         <Project projectList={projects} onRemoveProject={onRemoveProject} />

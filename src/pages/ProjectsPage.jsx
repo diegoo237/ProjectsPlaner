@@ -17,21 +17,21 @@ const initialProjects = [
     key: 1,
     tag: "Projeto Pessoal",
     title: "Projeto Codigo certo",
-    prazo: 10,
+    prazo: "2024-12-04",
   },
   {
     id: "a_fazer",
     key: 2,
     tag: "Projeto de Trabalho",
     title: "Desenvolvimento de Site Institucional",
-    prazo: 30,
+    prazo: "2024-09-14",
   },
   {
     id: "concluido",
     key: 3,
     tag: "Projeto Acadêmico",
     title: "Pesquisa em Ciência da Computação",
-    prazo: 15,
+    prazo: "2024-02-01",
   },
 ];
 
@@ -64,16 +64,17 @@ function reducer(state, action) {
 function ProjectPage() {
   const [state, dispatch] = useReducer(reducer, { projects: initialProjects });
 
-  const handleAddProject = (stationId) => {
-    const newProject = {
-      id: stationId, // O estado da nova estação
-      key: Date.now(), // Gerar uma chave única com base na data atual
-      tag: "Novo Projeto", // Pode personalizar ou receber do usuário
-      title: "Título do Novo Projeto", // Pode ser um input dinâmico
-      prazo: 10, // Prazo fictício, também pode ser dinâmico
+  const handleAddProject = (stationId, newProject) => {
+    const { title, prazo } = newProject;
+    const projectToAdd = {
+      id: stationId,
+      key: Date.now(),
+      tag: "Novo Projeto",
+      title: title,
+      prazo: prazo,
     };
 
-    dispatch({ type: ADD_PROJECT, payload: newProject });
+    dispatch({ type: ADD_PROJECT, payload: projectToAdd });
   };
 
   return (
@@ -97,7 +98,9 @@ function ProjectPage() {
               onRemoveProject={(key) =>
                 dispatch({ type: REMOVE_PROJECT, payload: key })
               }
-              onAddProject={() => handleAddProject(station.id)}
+              onAddProject={(newProject) =>
+                handleAddProject(station.id, newProject)
+              }
             />
           );
         })}
