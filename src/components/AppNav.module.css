@@ -6,9 +6,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.nav:hover {
-  cursor: pointer;
-}
+
 .nav a:visited,
 .nav a:link {
   color: #fff;
