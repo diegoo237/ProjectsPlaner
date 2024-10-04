@@ -1,0 +1,21 @@
+.dashContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 86vh;
+}
+.dashContent div {
+  background-color: rgba(0, 0, 0, 0.648);
+  padding: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.dashContent p {
+  font-size: 2rem;
+}
+.dashContent h1 {
+  font-size: 7rem;
+}
