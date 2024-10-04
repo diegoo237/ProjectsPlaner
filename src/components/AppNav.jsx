@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 function AppNav() {
   return (
     <nav className={styles.nav}>
-      <NavLink to="/home">
+      <NavLink to="/">
         <h2>Logo</h2>
       </NavLink>
       <ul className={styles.ul}>
