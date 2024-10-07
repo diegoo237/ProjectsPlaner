@@ -1,4 +1,4 @@
-import styles from "./Project.module.css"; // Adicione a importação de estilos
+import styles from "./Project.module.css";
 import PropTypes from "prop-types";
 import OptionsBtn from "./OptionsBtn";
 import dateIcon from "../../assets/dateIcon.svg";
@@ -39,7 +39,7 @@ Project.propTypes = {
       key: PropTypes.number.isRequired,
       tag: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      prazo: PropTypes.number.isRequired,
+      prazo: PropTypes.string.isRequired,
     })
   ).isRequired,
   onRemoveProject: PropTypes.func.isRequired,

@@ -14,6 +14,12 @@ function AppNav() {
         <NavLink to="/projects">
           <h3>Planer</h3>
         </NavLink>
+        <NavLink to="/write">
+          <h3>Write</h3>
+        </NavLink>
+        <NavLink to="/read">
+          <h3>Read</h3>
+        </NavLink>
       </ul>
     </nav>
   );
