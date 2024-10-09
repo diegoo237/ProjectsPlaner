@@ -3,46 +3,33 @@ import PropTypes from "prop-types";
 import OptionsBtn from "./OptionsBtn";
 import dateIcon from "../../assets/dateIcon.svg";
 
-function Project({ projectList, onRemoveProject }) {
+function Project({ project }) {
   return (
     <>
-      {projectList.map((project) => (
-        <section key={project.key} className={styles.project}>
-          <div className={styles.content}>
-            <header>
-              <span className={styles.tag}>{project.tag}</span>
-              <OptionsBtn
-                projectKey={project.key}
-                onRemoveProject={onRemoveProject}
-              />
-            </header>
-            <main>
-              <p className={styles.title}>{project.title}</p>
-            </main>
-          </div>
+      <section key={project._id} className={styles.project}>
+        <div className={styles.content}>
+          <header>
+            <span className={project.tag ? styles.tag : ""}>{project.tag}</span>
 
-          <footer>
-            <div className={styles.prazo}>
-              <img src={dateIcon} alt="" /> {project.prazo}
-            </div>
-          </footer>
-        </section>
-      ))}
+            <OptionsBtn projectKey={project._id} />
+          </header>
+          <main>
+            <p className={styles.title}>{project.title}</p>
+          </main>
+        </div>
+
+        <footer>
+          <div className={styles.prazo}>
+            <img src={dateIcon} alt="" /> {project.prazo}
+          </div>
+        </footer>
+      </section>
     </>
   );
 }
 
 Project.propTypes = {
-  projectList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      key: PropTypes.number.isRequired,
-      tag: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      prazo: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onRemoveProject: PropTypes.func.isRequired,
+  project: PropTypes.object.isRequired,
 };
 
 export default Project;

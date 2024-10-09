@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config(); // Carrega as variáveis de ambiente
+dotenv.config();
 
-const uri = process.env.SERVER_MONGO_URL; // Obtém a URL do MongoDB
-console.log("MongoDB URI:", uri); // Adicione isto antes da conexão
+const uri = process.env.SERVER_MONGO_URL;
+console.log("MongoDB URI:", uri);
 const connectDB = async () => {
   try {
     await mongoose.connect(uri);

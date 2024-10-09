@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./Database.js";
 import dotenv from "dotenv";
-import DataModel from "./DataModel.js";
+import ProjectModel from "./models/ProjectModel.js";
+import ProjectstationModel from "./models/ProjectstationModel.js";
 
 dotenv.config();
 
@@ -12,25 +13,36 @@ const app = express();
 app.use(express.json({ extended: false }));
 app.use(cors());
 
-app.get("/readfromserver", async (req, res) => {
+app.post("/projects", async (req, res) => {
   try {
-    const data = await DataModel.find();
-    res.json(data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    res.status(500).json({ message: "Server error while fetching data" });
-  }
-});
+    const { title, station, prazo } = req.body;
 
-app.post("/writetodatabase", async (req, res) => {
-  try {
-    const { content } = req.body;
-    const newData = new DataModel({ content });
-    await newData.save();
+    const newProject = new ProjectModel({ title, station, prazo });
+    await newProject.save();
     res.json({ message: "Data saved successfully" });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server error while saving data");
+  }
+});
+
+app.get("/stations", async (req, res) => {
+  try {
+    const stations = await ProjectstationModel.find();
+    res.status(200).json(stations);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Erro ao buscar stations dos projetos", error });
+  }
+});
+
+app.get("/projects", async (req, res) => {
+  try {
+    const projects = await ProjectModel.find();
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar os projetos", error });
   }
 });
 

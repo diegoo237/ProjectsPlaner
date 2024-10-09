@@ -1,36 +1,51 @@
 import PropTypes from "prop-types";
-import { useRef } from "react";
 import styles from "./AdProjectForm.module.css";
-function AdProjectForm({ isVisible, componentRef, onAddProject }) {
-  const titleRef = useRef(null);
-  const dateRef = useRef(null);
+import { useState } from "react";
+import axios from "axios";
 
-  const handleAddProject = (e) => {
+function AdProjectForm({ isVisible, componentRef, setIsVisible, station }) {
+  const [title, setTitle] = useState("");
+  const [prazo, setPrazo] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const title = titleRef.current.value;
-    const prazo = dateRef.current.value;
-
-    onAddProject({ title, prazo });
+    if (!title || !prazo) {
+      alert("Por favor, preencha todos os campos");
+      return;
+    }
+    const newTask = { title, station, prazo };
+    await axios.post("http://localhost:5000/projects", newTask);
   };
-
   return (
     <form
       ref={componentRef}
       className={isVisible ? styles.addProjectForm : "invisible"}
-      onSubmit={handleAddProject}
+      onSubmit={handleSubmit}
     >
       <div className={styles.row}>
-        <label htmlFor="projectTitle">Titulo do Projeto</label>
-        <input id="projectTitle" ref={titleRef} />
+        <input
+          className={styles.textImput}
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Titulo do Projeto"
+        />
       </div>
 
       <div className={styles.row}>
-        <label htmlFor="date">Prazo para conclusao</label>
-        <input id="date" type="date" ref={dateRef} />
+        <label htmlFor="date">Definir data de conclusao</label>
+        <input
+          className={styles.dateImput}
+          type="date"
+          value={prazo}
+          onChange={(e) => setPrazo(e.target.value)}
+        />
       </div>
 
       <div className={styles.buttons}>
-        <button type="submit">Add</button>
+        <button onClick={() => setIsVisible(false)} type="submit">
+          Adicionar Projeto
+        </button>
       </div>
     </form>
   );
@@ -38,7 +53,8 @@ function AdProjectForm({ isVisible, componentRef, onAddProject }) {
 export default AdProjectForm;
 
 AdProjectForm.propTypes = {
+  station: PropTypes.string,
   isVisible: PropTypes.bool,
+  setIsVisible: PropTypes.func,
   componentRef: PropTypes.object,
-  onAddProject: PropTypes.func.isRequired,
 };

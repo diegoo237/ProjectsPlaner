@@ -64,3 +64,8 @@
   border-radius: 0.3rem;
   background-color: var(--color-brand--1);
 }
+@media only screen and (max-width: 983px) {
+  .project {
+    width: 27rem;
+  }
+}

@@ -3,21 +3,41 @@ import trashIcon from "../../assets/trashIcon.svg";
 import tagIcon from "../../assets/tagIcon.svg";
 import pointIcon from "../../assets/pointsIcon.svg";
 import styles from "./OptionsBtn.module.css";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
-function OptionsBtn({ onRemoveProject, projectKey }) {
+function OptionsBtn({ projectKey }) {
   const [isVisible, setIsVisible] = useState(false);
+  const componentRef = useRef(null);
 
   const toggleVisibility = () => {
     setIsVisible((prevIsVisible) => !prevIsVisible);
   };
+
+  const handleClickOutside = (event) => {
+    if (componentRef.current && !componentRef.current.contains(event.target)) {
+      setIsVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVisible]);
+
   return (
     <>
       <button onClick={toggleVisibility} className={styles.btn}>
         <img src={pointIcon} alt="" />
       </button>
 
-      <ul className={isVisible ? styles.options : "invisible"}>
+      <ul
+        ref={componentRef}
+        className={isVisible ? styles.options : "invisible"}
+      >
         <li>
           <button className={styles.btn}>
             <img src={tagIcon} /> Tag
@@ -25,7 +45,7 @@ function OptionsBtn({ onRemoveProject, projectKey }) {
         </li>
         <li>
           <button
-            onClick={() => onRemoveProject(projectKey)}
+            /* onClick={() => onRemoveProject(projectKey)}*/
             className={styles.btn}
           >
             <img src={trashIcon} /> Excluir
@@ -38,8 +58,7 @@ function OptionsBtn({ onRemoveProject, projectKey }) {
 export default OptionsBtn;
 
 OptionsBtn.propTypes = {
-  onRemoveProject: PropTypes.func.isRequired,
-  projectKey: PropTypes.number.isRequired,
+  projectKey: PropTypes.string.isRequired,
   toggleVisibility: PropTypes.func,
   isVisible: PropTypes.func,
 };
