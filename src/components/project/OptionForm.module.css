@@ -1,0 +1,32 @@
+.options {
+  display: grid;
+
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 2rem;
+
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
+
+  background-color: #fff;
+  border-radius: 1rem;
+  gap: 1rem;
+}
+.options textarea {
+  margin-top: -1rem;
+  border: solid 2px black;
+  min-width: 50rem;
+  min-height: 20rem;
+}
+.options input {
+  margin-top: -1rem;
+  width: 12rem;
+}
+.btn {
+  background-color: var(--color-light--1);
+  border-radius: 5px;
+  padding: 1rem;
+  cursor: pointer;
+}

@@ -4,7 +4,7 @@ const DataSchema = new mongoose.Schema({
   title: String,
   station: String,
   prazo: Date,
-  tag: String,
+  tags: [{ type: String }],
 });
 
 export default mongoose.model("projects", DataSchema);

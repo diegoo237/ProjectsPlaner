@@ -45,7 +45,7 @@ function ProjectState({ station, projects }) {
 
   return (
     <article className={styles.container}>
-      <p className={styles.state}>{correctTitle()}</p>
+      <p className={styles.state_title}>{correctTitle()}</p>
       <AdProjectBtn toggleVisibility={toggleVisibility} />
       <AdProjectForm
         isVisible={isVisible}

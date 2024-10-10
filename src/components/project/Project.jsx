@@ -10,7 +10,6 @@ function Project({ project }) {
         <div className={styles.content}>
           <header>
             <span className={project.tag ? styles.tag : ""}>{project.tag}</span>
-
             <OptionsBtn projectKey={project._id} />
           </header>
           <main>

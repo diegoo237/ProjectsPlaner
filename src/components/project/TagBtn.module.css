@@ -1,0 +1,36 @@
+.btn {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 8rem;
+  height: 3.5rem;
+  font-size: 13px;
+}
+.btn:hover {
+  cursor: pointer;
+}
+.btn img {
+  height: 1.7rem;
+}
+.tag {
+  display: flex;
+  position: relative;
+}
+.tag form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tag button {
+  background-color: var(--color-light--1);
+  height: 100%;
+  width: 4rem;
+}
+
+.tag form input {
+  background-color: rgb(199, 199, 199);
+  padding: 1rem;
+  border: none;
+}
