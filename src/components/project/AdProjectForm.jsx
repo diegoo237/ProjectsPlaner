@@ -14,7 +14,7 @@ function AdProjectForm({ isVisible, componentRef, setIsVisible, station }) {
       return;
     }
     const newTask = { title, station, prazo };
-    await axios.post("http://localhost:5000/projects", newTask);
+    await axios.post("http://35.199.72.143:5000/projects", newTask);
   };
   return (
     <form

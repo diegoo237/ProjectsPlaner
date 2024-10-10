@@ -11,7 +11,7 @@ function ProjectPage() {
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/stations");
+        const response = await axios.get("http://35.199.72.143:5000/stations");
         setStationList(response.data);
       } catch (error) {
         console.error("Erro ao buscar os stations:", error);
@@ -26,7 +26,7 @@ function ProjectPage() {
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/projects");
+        const response = await axios.get("http://35.199.72.143:5000/projects");
         setProjectList(response.data);
       } catch (error) {
         console.error("Erro ao buscar os projetos:", error);
