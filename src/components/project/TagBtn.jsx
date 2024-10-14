@@ -16,28 +16,26 @@ function TagBtn({ projectkey }) {
   const addTagToProject = async (projectId, tag) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/projects/${projectId}/tags`,
+        `http://localhost:5000/projects/${projectId}/tag`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ tag }), // Envia a tag para adicionar
+          body: JSON.stringify({ tag }),
         }
       );
 
-      // Verifica se a resposta foi bem-sucedida
       if (!response.ok) {
-        throw new Error("Erro ao adicionar a tag");
+        throw new Error("Erro na solicitação");
       }
 
-      const updatedProject = await response.json();
-      setMessage("Tag adicionada com sucesso!"); // Feedback para o usuário
-      console.log("Projeto atualizado com nova tag:", updatedProject);
-      setTag(""); // Limpa o campo de entrada
+      const data = await response.json();
+      console.log("Projeto atualizado:", data);
+      setMessage("Tag adicionada com sucesso!"); // Atualiza a mensagem de sucesso
     } catch (error) {
-      setMessage(`Erro: ${error.message}`); // Mensagem de erro
-      console.error("Erro ao adicionar tag:", error);
+      console.error("Erro:", error);
+      setMessage("Erro ao adicionar a tag."); // Atualiza a mensagem de erro
     }
   };
 

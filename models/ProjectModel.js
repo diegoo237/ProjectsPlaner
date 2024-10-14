@@ -1,13 +1,27 @@
 import mongoose from "mongoose";
 
-const DataSchema = new mongoose.Schema({
-  title: String,
-  station: String,
-  prazo: Date,
-  tags: [{ type: String }],
+const projectSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  station: {
+    type: String,
+    required: true,
+  },
+  prazo: {
+    type: Date,
+    required: true,
+  },
+  tags: {
+    type: [String], // Altera para um array de strings
+    default: [],
+  },
 });
 
-export default mongoose.model("projects", DataSchema);
+const ProjectModel = mongoose.model("Project", projectSchema);
+export default ProjectModel;
+
 /*
       id: stationId,
       key: Date.now(),

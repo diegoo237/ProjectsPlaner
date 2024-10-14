@@ -4,6 +4,7 @@ import connectDB from "./Database.js";
 import dotenv from "dotenv";
 import ProjectModel from "./models/ProjectModel.js";
 import ProjectstationModel from "./models/ProjectstationModel.js";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -46,9 +47,9 @@ app.post("/projects", async (req, res) => {
   }
 });
 
-app.put("/projects/:id/tags", async (req, res) => {
-  const { tag } = req.body;
+app.delete("/projects/:id", async (req, res) => {
   const projectId = req.params.id;
+  console.log(`Recebendo solicitação para deletar o projeto: ${projectId}`);
 
   // Verifica se o ID é um ObjectId válido
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
@@ -56,23 +57,56 @@ app.put("/projects/:id/tags", async (req, res) => {
   }
 
   try {
-    // Verifica se o projeto existe
+    const deletedProject = await ProjectModel.findByIdAndDelete(projectId);
+
+    // Adicione log para verificar se o projeto foi encontrado e deletado
+    console.log(`Resultado da deleção: ${deletedProject}`);
+
+    if (!deletedProject) {
+      return res.status(404).json({ error: "Projeto não encontrado" });
+    }
+
+    res.status(200).json({ message: "Projeto deletado com sucesso" });
+  } catch (error) {
+    console.error("Erro ao deletar projeto:", error);
+    res
+      .status(500)
+      .json({ error: "Erro ao deletar projeto", details: error.message });
+  }
+});
+
+app.put("/projects/:id/tag", async (req, res) => {
+  const { tag } = req.body; // Espera um objeto com a propriedade 'tag'
+  const projectId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(projectId)) {
+    return res.status(400).json({ error: "ID do projeto inválido" });
+  }
+
+  // Verifica se a tag foi passada como string
+  if (!tag || typeof tag !== "string") {
+    return res.status(400).json({ error: "Tag inválida ou não fornecida" });
+  }
+
+  try {
     const projectExists = await ProjectModel.findById(projectId);
     if (!projectExists) {
       return res.status(404).json({ error: "Projeto não encontrado" });
     }
 
-    // Atualiza o projeto adicionando a nova tag
+    // Usa $push para adicionar a nova tag ao array de tags
     const updatedProject = await ProjectModel.findByIdAndUpdate(
       projectId,
-      { $push: { tags: tag } },
+      { $push: { tags: tag } }, // Adiciona a tag ao array
       { new: true }
     );
 
-    res.status(200).json(updatedProject); // Retorna o projeto atualizado
+    res.status(200).json(updatedProject);
   } catch (error) {
     console.error("Erro ao adicionar tag:", error);
-    res.status(500).json({ error: "Erro ao adicionar tag" });
+    res
+      .status(500)
+      .json({ error: "Erro ao adicionar tag", details: error.message });
   }
 });
 

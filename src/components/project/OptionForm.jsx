@@ -11,7 +11,7 @@ function OptionForm({ isVisible, componentRef, projectKey }) {
     >
       <h1>titulo</h1>
       <span>
-        <TrashBtn />
+        <TrashBtn projectkey={projectKey} />
         <TagBtn projectkey={projectKey} />
       </span>
       <p>Descriçao do projeto</p>
@@ -27,6 +27,6 @@ export default OptionForm;
 
 OptionForm.propTypes = {
   projectKey: PropTypes.string.isRequired,
-  isVisible: PropTypes.func,
-  componentRef: PropTypes.func,
+  isVisible: PropTypes.bool,
+  componentRef: PropTypes.object,
 };

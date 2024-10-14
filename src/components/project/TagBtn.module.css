@@ -16,21 +16,18 @@
 }
 .tag {
   display: flex;
-  position: relative;
-}
-.tag form {
-  display: flex;
   align-items: center;
-  justify-content: center;
 }
 .tag button {
   background-color: var(--color-light--1);
   height: 100%;
   width: 4rem;
+  height: 3rem;
 }
 
 .tag form input {
   background-color: rgb(199, 199, 199);
-  padding: 1rem;
   border: none;
+  height: 3rem;
+  padding: 0.3rem;
 }
