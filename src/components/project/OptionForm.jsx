@@ -13,6 +13,7 @@ function OptionForm({ isVisible, componentRef, projectKey }) {
       <span>
         <TrashBtn projectkey={projectKey} />
         <TagBtn projectkey={projectKey} />
+        <p>Station</p>
       </span>
       <p>Descriçao do projeto</p>
       <textarea></textarea>

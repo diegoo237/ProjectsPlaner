@@ -2,28 +2,38 @@ import styles from "./Project.module.css";
 import PropTypes from "prop-types";
 import OptionsBtn from "./OptionsBtn";
 import dateIcon from "../../assets/dateIcon.svg";
+import Tag from "./Tag";
 
 function Project({ project }) {
-  return (
-    <>
-      <section key={project._id} className={styles.project}>
-        <div className={styles.content}>
-          <header>
-            <span className={project.tag ? styles.tag : ""}>{project.tag}</span>
-            <OptionsBtn projectKey={project._id} />
-          </header>
-          <main>
-            <p className={styles.title}>{project.title}</p>
-          </main>
-        </div>
+  let tagsArray = [];
 
-        <footer>
-          <div className={styles.prazo}>
-            <img src={dateIcon} alt="" /> {project.prazo}
+  if (project.tags) {
+    tagsArray = Object.values(project.tags);
+  }
+
+  return (
+    <section key={project._id} className={styles.project}>
+      <div className={styles.content}>
+        <header>
+          <div className={styles.tags}>
+            {tagsArray.map((tag, index) => (
+              <Tag key={index} name={tag} />
+            ))}
           </div>
-        </footer>
-      </section>
-    </>
+
+          <OptionsBtn projectKey={project._id} />
+        </header>
+        <main>
+          <p className={styles.title}>{project.title}</p>
+        </main>
+      </div>
+
+      <footer>
+        <div className={styles.prazo}>
+          <img src={dateIcon} alt="" /> {project.prazo}
+        </div>
+      </footer>
+    </section>
   );
 }
 

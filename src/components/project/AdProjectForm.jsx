@@ -3,7 +3,13 @@ import styles from "./AdProjectForm.module.css";
 import { useState } from "react";
 import axios from "axios";
 
-function AdProjectForm({ isVisible, componentRef, setIsVisible, station }) {
+function AdProjectForm({
+  isVisible,
+  componentRef,
+  setIsVisible,
+  station,
+  setProjectList,
+}) {
   const [title, setTitle] = useState("");
   const [prazo, setPrazo] = useState("");
 
@@ -13,9 +19,30 @@ function AdProjectForm({ isVisible, componentRef, setIsVisible, station }) {
       alert("Por favor, preencha todos os campos");
       return;
     }
+
     const newTask = { title, station, prazo };
-    await axios.post("http://35.199.72.143:5000/projects", newTask);
+
+    try {
+      const response = await axios.post(
+        "http://35.199.72.143:5000/projects",
+        newTask
+      );
+      console.log("Novo projeto adicionado:", response.data); // Deve mostrar o projeto adicionado
+
+      // Atualiza a lista de projetos
+      setProjectList((prevList) => [...prevList, response.data]); // Aqui estamos adicionando o projeto recém-criado à lista
+
+      // Limpa os campos após a submissão
+      setTitle("");
+      setPrazo("");
+      // Fecha o formulário
+      setIsVisible(false);
+    } catch (error) {
+      console.error("Erro ao adicionar projeto:", error);
+      alert("Houve um erro ao adicionar o projeto. Tente novamente.");
+    }
   };
+
   return (
     <form
       ref={componentRef}
@@ -28,12 +55,12 @@ function AdProjectForm({ isVisible, componentRef, setIsVisible, station }) {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Titulo do Projeto"
+          placeholder="Título do Projeto"
         />
       </div>
 
       <div className={styles.row}>
-        <label htmlFor="date">Definir data de conclusao</label>
+        <label htmlFor="date">Definir data de conclusão</label>
         <input
           className={styles.dateImput}
           type="date"
@@ -43,18 +70,18 @@ function AdProjectForm({ isVisible, componentRef, setIsVisible, station }) {
       </div>
 
       <div className={styles.buttons}>
-        <button onClick={() => setIsVisible(false)} type="submit">
-          Adicionar Projeto
-        </button>
+        <button type="submit">Adicionar Projeto</button>
       </div>
     </form>
   );
 }
+
 export default AdProjectForm;
 
 AdProjectForm.propTypes = {
-  station: PropTypes.string,
-  isVisible: PropTypes.bool,
-  setIsVisible: PropTypes.func,
+  station: PropTypes.string.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  setIsVisible: PropTypes.func.isRequired,
   componentRef: PropTypes.object,
+  setProjectList: PropTypes.func.isRequired,
 };

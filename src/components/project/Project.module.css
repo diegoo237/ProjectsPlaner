@@ -14,23 +14,14 @@
   display: flex;
   justify-content: space-between;
 }
-.content header button {
-  border: none;
-}
-.tag {
-  background-color: brown;
-
-  border-radius: 0.4rem;
-  padding: 0.2rem 0.6rem;
-
-  margin-bottom: 1.5rem;
-
-  font-size: 1rem;
-  color: #fff;
-
+.tags {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.4rem;
+}
+
+.content header button {
+  border: none;
 }
 
 .title {

@@ -1,12 +1,11 @@
-import styles from "./ProjectState.module.css";
+import styles from "./ProjectStation.module.css";
 import PropTypes from "prop-types";
 import AdProjectBtn from "./AdProjectBtn";
 import AdProjectForm from "./project/AdProjectForm";
 import Project from "./project/Project";
-
 import { useState, useEffect, useRef } from "react";
 
-function ProjectState({ station, projects }) {
+function ProjectStation({ station, projects, setProjectList }) {
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef(null);
 
@@ -48,6 +47,7 @@ function ProjectState({ station, projects }) {
       <p className={styles.state_title}>{correctTitle()}</p>
       <AdProjectBtn toggleVisibility={toggleVisibility} />
       <AdProjectForm
+        setProjectList={setProjectList}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         componentRef={componentRef}
@@ -60,9 +60,10 @@ function ProjectState({ station, projects }) {
   );
 }
 
-ProjectState.propTypes = {
+ProjectStation.propTypes = {
   station: PropTypes.string,
   projects: PropTypes.array,
+  setProjectList: PropTypes.func,
 };
 
-export default ProjectState;
+export default ProjectStation;

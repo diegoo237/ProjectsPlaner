@@ -39,8 +39,10 @@ app.post("/projects", async (req, res) => {
     const { title, station, prazo } = req.body;
 
     const newProject = new ProjectModel({ title, station, prazo });
-    await newProject.save();
-    res.json({ message: "Data saved successfully" });
+    const savedProject = await newProject.save(); // Salva o projeto e armazena o objeto salvo
+
+    // Retorna o projeto recém-criado
+    res.status(201).json(savedProject); // Retorna o projeto criado com status 201
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server error while saving data");
