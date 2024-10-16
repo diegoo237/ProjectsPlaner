@@ -4,12 +4,18 @@ import OptionsBtn from "./OptionsBtn";
 import dateIcon from "../../assets/dateIcon.svg";
 import Tag from "./Tag";
 
-function Project({ project }) {
+function Project({ project, setProjectList }) {
   let tagsArray = [];
 
   if (project.tags) {
     tagsArray = Object.values(project.tags);
   }
+
+  const date = new Date(project.prazo);
+
+  // Formataando a data
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = date.toLocaleDateString("pt-BR", options);
 
   return (
     <section key={project._id} className={styles.project}>
@@ -21,7 +27,7 @@ function Project({ project }) {
             ))}
           </div>
 
-          <OptionsBtn projectKey={project._id} />
+          <OptionsBtn setProjectList={setProjectList} project={project} />
         </header>
         <main>
           <p className={styles.title}>{project.title}</p>
@@ -30,7 +36,7 @@ function Project({ project }) {
 
       <footer>
         <div className={styles.prazo}>
-          <img src={dateIcon} alt="" /> {project.prazo}
+          <img src={dateIcon} alt="" /> {formattedDate}
         </div>
       </footer>
     </section>
@@ -39,6 +45,7 @@ function Project({ project }) {
 
 Project.propTypes = {
   project: PropTypes.object.isRequired,
+  setProjectList: PropTypes.func,
 };
 
 export default Project;

@@ -54,7 +54,11 @@ function ProjectStation({ station, projects, setProjectList }) {
         station={station}
       />
       {filteredProjects.map((project) => (
-        <Project key={project._id} project={project} />
+        <Project
+          setProjectList={setProjectList}
+          key={project._id}
+          project={project}
+        />
       ))}
     </article>
   );

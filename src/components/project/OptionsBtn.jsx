@@ -4,7 +4,7 @@ import styles from "./OptionsBtn.module.css";
 import { useState, useRef, useEffect } from "react";
 import OptionForm from "./OptionForm";
 
-function OptionsBtn({ projectKey }) {
+function OptionsBtn({ project, setProjectList }) {
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef(null);
 
@@ -35,9 +35,11 @@ function OptionsBtn({ projectKey }) {
       </button>
 
       <OptionForm
+        setProjectList={setProjectList}
+        setIsVisible={setIsVisible}
         isVisible={isVisible}
         componentRef={componentRef}
-        projectKey={projectKey}
+        project={project}
       />
     </>
   );
@@ -45,7 +47,8 @@ function OptionsBtn({ projectKey }) {
 export default OptionsBtn;
 
 OptionsBtn.propTypes = {
-  projectKey: PropTypes.string.isRequired,
+  project: PropTypes.object.isRequired,
   toggleVisibility: PropTypes.func,
   isVisible: PropTypes.func,
+  setProjectList: PropTypes.func,
 };

@@ -3,7 +3,7 @@ import tagIcon from "../../assets/tagIcon.svg";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-function TagBtn({ projectkey }) {
+function TagBtn({ projectkey, setProjectList }) {
   const [isVisible, setIsVisible] = useState(false);
   const [tag, setTag] = useState("");
   const [message, setMessage] = useState("");
@@ -30,8 +30,16 @@ function TagBtn({ projectkey }) {
         throw new Error("Erro na solicitação");
       }
 
-      const data = await response.json();
-      console.log("Projeto atualizado:", data);
+      const updatedProject = await response.json();
+      console.log("Projeto atualizado:", updatedProject);
+
+      // Atualize o estado da lista de projetos
+      setProjectList((prevList) =>
+        prevList.map((project) =>
+          project._id === projectId ? updatedProject : project
+        )
+      );
+
       setMessage("Tag adicionada com sucesso!"); // Atualiza a mensagem de sucesso
     } catch (error) {
       console.error("Erro:", error);
@@ -46,6 +54,7 @@ function TagBtn({ projectkey }) {
       return;
     }
     addTagToProject(projectkey, tag);
+    setTag("");
   };
 
   return (
@@ -72,6 +81,7 @@ function TagBtn({ projectkey }) {
 
 TagBtn.propTypes = {
   projectkey: PropTypes.string.isRequired,
+  setProjectList: PropTypes.func,
 };
 
 export default TagBtn;

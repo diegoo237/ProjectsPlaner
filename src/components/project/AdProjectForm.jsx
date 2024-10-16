@@ -23,19 +23,12 @@ function AdProjectForm({
     const newTask = { title, station, prazo };
 
     try {
-      const response = await axios.post(
-        "http://35.199.72.143:5000/projects",
-        newTask
-      );
-      console.log("Novo projeto adicionado:", response.data); // Deve mostrar o projeto adicionado
-
-      // Atualiza a lista de projetos
-      setProjectList((prevList) => [...prevList, response.data]); // Aqui estamos adicionando o projeto recém-criado à lista
-
-      // Limpa os campos após a submissão
+      await axios.post("http://35.199.72.143:5000/projects", newTask);
+      // Faça uma nova requisição para buscar a lista atualizada de projetos
+      const response = await axios.get("http://35.199.72.143:5000/projects");
+      setProjectList(response.data);
       setTitle("");
       setPrazo("");
-      // Fecha o formulário
       setIsVisible(false);
     } catch (error) {
       console.error("Erro ao adicionar projeto:", error);

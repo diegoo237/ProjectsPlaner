@@ -30,3 +30,10 @@
   padding: 1rem;
   cursor: pointer;
 }
+.options img {
+  width: 2rem;
+}
+.close_btn {
+  background-color: #fff;
+  cursor: pointer;
+}
