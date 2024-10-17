@@ -5,7 +5,7 @@ import styles from "./TrashConfirm.module.css";
 function TrashConfirm({
   trashIsVisible,
   toggleVisibility,
-  projectkey,
+  project,
   setIsVisible,
   setProjectList,
 }) {
@@ -53,8 +53,8 @@ function TrashConfirm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Deletando projeto com ID:", projectkey); // Adicione este log
-    deleteProject(projectkey);
+    console.log("Deletando projeto com ID:", project._id); // Adicione este log
+    deleteProject(project._id);
     setIsVisible(false);
     toggleVisibility();
   };
@@ -64,10 +64,17 @@ function TrashConfirm({
       ref={componentRef}
       className={trashIsVisible ? styles.conteiner : "invisible"}
     >
-      <p>Tem certexa que quer excluir o projeto X ?</p>
+      <p>
+        Tem certeza que quer excluir o projeto <strong>{project.title}</strong>?
+      </p>
+
       <div className={styles.btn_box}>
-        <button onClick={handleSubmit}>Confirmar</button>
-        <button onClick={toggleVisibility}>Cancelar</button>
+        <button className={styles.confirm} onClick={handleSubmit}>
+          Confirmar
+        </button>
+        <button className={styles.cancel} onClick={toggleVisibility}>
+          Cancelar
+        </button>
       </div>
     </div>
   );
@@ -78,6 +85,6 @@ TrashConfirm.propTypes = {
   trashIsVisible: PropTypes.bool,
   toggleVisibility: PropTypes.func,
   setIsVisible: PropTypes.func,
-  projectkey: PropTypes.string.isRequired,
+  project: PropTypes.object.isRequired,
   setProjectList: PropTypes.func,
 };

@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import TagBtn from "./TagBtn";
 import TrashBtn from "./TrashBtn";
-import xmarkIcon from "../../assets/xmarkIcon.svg";
+import DropDown from "./DropDown";
+import xmarkIcon from "../../../assets/xmarkIcon.svg";
 import TrashConfirm from "./TrashConfirm";
 import styles from "./OptionForm.module.css";
 import { useState } from "react";
@@ -38,7 +39,7 @@ function OptionForm({
         <span>
           <TrashBtn toggleVisibility={toggleVisibility} />
           <TagBtn setProjectList={setProjectList} projectkey={project._id} />
-          <p>Station</p>
+          <DropDown />
         </span>
         <p>Descriçao do projeto</p>
         <textarea></textarea>
@@ -48,7 +49,7 @@ function OptionForm({
         <TrashConfirm
           trashIsVisible={trashIsVisible}
           toggleVisibility={toggleVisibility}
-          projectkey={project._id}
+          project={project}
           setIsVisible={setIsVisible}
           setProjectList={setProjectList}
         />

@@ -1,5 +1,5 @@
 import styles from "./TrashBtn.module.css";
-import trashIcon from "../../assets/trashIcon.svg";
+import trashIcon from "../../../assets/trashIcon.svg";
 import PropTypes from "prop-types";
 
 function TrashBtn({ toggleVisibility }) {

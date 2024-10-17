@@ -1,0 +1,8 @@
+.drop_down {
+  width: 14rem;
+  padding: 0.5rem;
+  border: solid 1px;
+}
+.drop_down:hover {
+  border: solid 2px;
+}

@@ -10,7 +10,9 @@
 }
 .btn:hover {
   cursor: pointer;
+  font-weight: bold;
 }
+
 .btn img {
   height: 1.7rem;
 }
@@ -28,6 +30,7 @@
 .tag form input {
   background-color: rgb(199, 199, 199);
   border: none;
+  border-radius: 0.2rem;
   height: 3rem;
   padding: 0.3rem;
 }

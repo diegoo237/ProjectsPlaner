@@ -12,4 +12,5 @@
 }
 .newProject:hover {
   cursor: pointer;
+  background-color: var(--hover-light--1);
 }

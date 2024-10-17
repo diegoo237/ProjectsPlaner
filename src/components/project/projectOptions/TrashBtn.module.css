@@ -10,6 +10,7 @@
 }
 .btn:hover {
   cursor: pointer;
+  font-weight: bold;
 }
 .btn img {
   height: 1.7rem;

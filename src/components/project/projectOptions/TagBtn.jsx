@@ -1,7 +1,7 @@
 import styles from "./TagBtn.module.css";
-import tagIcon from "../../assets/tagIcon.svg";
+import tagIcon from "../../../assets/tagIcon.svg";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function TagBtn({ projectkey, setProjectList }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,7 +12,35 @@ function TagBtn({ projectkey, setProjectList }) {
     setIsVisible((prevIsVisible) => !prevIsVisible);
   };
 
-  // Chama a api para adicionar uma tag ao projeto
+  const componentRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (componentRef.current && !componentRef.current.contains(event.target)) {
+      toggleVisibility();
+    }
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVisible]);
+
+  // Limpa a mensagem após 2 segundos
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 2000); // 2000ms = 2 segundos
+
+      // Limpa o temporizador se a mensagem mudar ou o componente for desmontado
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  // Chama a API para adicionar uma tag ao projeto
   const addTagToProject = async (projectId, tag) => {
     try {
       const response = await fetch(
@@ -33,7 +61,7 @@ function TagBtn({ projectkey, setProjectList }) {
       const updatedProject = await response.json();
       console.log("Projeto atualizado:", updatedProject);
 
-      // Atualize o estado da lista de projetos
+      // Atualiza o estado da lista de projetos
       setProjectList((prevList) =>
         prevList.map((project) =>
           project._id === projectId ? updatedProject : project
@@ -63,6 +91,7 @@ function TagBtn({ projectkey, setProjectList }) {
         <img src={tagIcon} alt="Tag icon" /> Tag
       </div>
       <form
+        ref={componentRef}
         onSubmit={handleSubmit}
         className={isVisible ? styles.options : "invisible"}
       >
@@ -73,8 +102,7 @@ function TagBtn({ projectkey, setProjectList }) {
         />
         <button type="submit">Add</button>
       </form>
-      {message && <p className={styles.message}>{message}</p>}{" "}
-      {/* Mensagem de feedback */}
+      {message && <p className={styles.message}>{message}</p>}
     </div>
   );
 }

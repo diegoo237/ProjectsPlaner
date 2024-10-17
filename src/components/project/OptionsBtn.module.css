@@ -1,6 +1,6 @@
 .btn {
   background-color: #fff;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,6 +8,8 @@
 }
 .btn:hover {
   cursor: pointer;
+  background-color: var(--hover-light--1);
+  border-radius: 50%;
 }
 .btn img {
   height: 1.7rem;

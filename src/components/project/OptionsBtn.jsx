@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import pointIcon from "../../assets/pointsIcon.svg";
 import styles from "./OptionsBtn.module.css";
 import { useState, useRef, useEffect } from "react";
-import OptionForm from "./OptionForm";
+import OptionForm from "./projectOptions/OptionForm";
 
 function OptionsBtn({ project, setProjectList }) {
   const [isVisible, setIsVisible] = useState(false);

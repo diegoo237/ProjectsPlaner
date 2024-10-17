@@ -3,12 +3,10 @@
   --color-brand--2: #ffffff;
   --color-brand--2: #000000;
 
-  --color-dark--0: #323130;
-  --color-dark--1: #2d3439;
-  --color-dark--2: #42484d;
-  --color-light--1: #aaa;
-  --color-light--2: #ececec;
-  --color-light--3: #d6dee0;
+  --color-light--1: #adb5bd;
+
+  --hover-light--1: #f1f3f5;
+  --hover-dark--1: #868e96;
 }
 * {
   margin: 0;
