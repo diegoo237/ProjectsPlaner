@@ -14,10 +14,15 @@
   display: flex;
   justify-content: space-between;
 }
+.btnContainer {
+  width: auto;
+  align-items: center;
+}
 .tags {
   width: 20rem;
 
   display: flex;
+  flex-wrap: wrap;
 
   align-items: center;
   gap: 0.4rem;

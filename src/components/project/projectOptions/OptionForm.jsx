@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import TagBtn from "./TagBtn";
 import TrashBtn from "./TrashBtn";
 import DropDown from "./DropDown";
+import Tag from "../Tag";
 import xmarkIcon from "../../../assets/xmarkIcon.svg";
 import TrashConfirm from "./TrashConfirm";
 import styles from "./OptionForm.module.css";
@@ -20,6 +21,12 @@ function OptionForm({
     setTrashIsVisible((prevIsVisible) => !prevIsVisible);
   };
 
+  let tagsArray = [];
+
+  if (project.tags) {
+    tagsArray = Object.values(project.tags);
+  }
+
   return (
     <>
       <div
@@ -28,6 +35,9 @@ function OptionForm({
       >
         <header>
           <h1>{project.title}</h1>
+          {tagsArray.map((tag, index) => (
+            <Tag key={index} name={tag} />
+          ))}
           <button
             className={styles.close_btn}
             onClick={() => setIsVisible(false)}

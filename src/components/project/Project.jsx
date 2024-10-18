@@ -26,8 +26,9 @@ function Project({ project, setProjectList }) {
               <Tag key={index} name={tag} />
             ))}
           </div>
-
-          <OptionsBtn setProjectList={setProjectList} project={project} />
+          <div className={styles.btnContainer}>
+            <OptionsBtn setProjectList={setProjectList} project={project} />
+          </div>
         </header>
         <main>
           <p className={styles.title}>{project.title}</p>

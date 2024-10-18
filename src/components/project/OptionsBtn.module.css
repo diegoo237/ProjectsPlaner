@@ -5,6 +5,8 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  grid-column: 2;
+  grid-row: 1;
 }
 .btn:hover {
   cursor: pointer;
