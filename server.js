@@ -112,6 +112,46 @@ app.put("/projects/:id/tag", async (req, res) => {
   }
 });
 
+app.delete("/projects/:id/tag", async (req, res) => {
+  const { tag } = req.body; // Espera um objeto com a propriedade 'tag'
+  const projectId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(projectId)) {
+    return res.status(400).json({ error: "ID do projeto inválido" });
+  }
+
+  // Verifica se a tag foi passada como string
+  if (!tag || typeof tag !== "string") {
+    return res.status(400).json({ error: "Tag inválida ou não fornecida" });
+  }
+
+  try {
+    const projectExists = await ProjectModel.findById(projectId);
+    if (!projectExists) {
+      return res.status(404).json({ error: "Projeto não encontrado" });
+    }
+
+    // Usa $pull para remover a tag do array de tags
+    const updatedProject = await ProjectModel.findByIdAndUpdate(
+      projectId,
+      { $pull: { tags: tag } }, // Remove a tag do array
+      { new: true }
+    );
+
+    // Verifica se a tag foi removida
+    if (!updatedProject) {
+      return res.status(404).json({ error: "Tag não encontrada" });
+    }
+
+    res.status(200).json(updatedProject);
+  } catch (error) {
+    console.error("Erro ao remover tag:", error);
+    res
+      .status(500)
+      .json({ error: "Erro ao remover tag", details: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on PORT: ${PORT}`);

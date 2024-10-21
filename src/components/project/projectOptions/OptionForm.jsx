@@ -3,6 +3,7 @@ import TagBtn from "./TagBtn";
 import TrashBtn from "./TrashBtn";
 import DropDown from "./DropDown";
 import Tag from "../Tag";
+import DeleteTag from "./DeleteTag";
 import xmarkIcon from "../../../assets/xmarkIcon.svg";
 import TrashConfirm from "./TrashConfirm";
 import styles from "./OptionForm.module.css";
@@ -34,10 +35,19 @@ function OptionForm({
         className={isVisible ? styles.options : "invisible"}
       >
         <header>
-          <h1>{project.title}</h1>
-          {tagsArray.map((tag, index) => (
-            <Tag key={index} name={tag} />
-          ))}
+          <div>
+            <h1>{project.title}</h1>
+
+            {tagsArray.map((tag, index) => (
+              <Tag key={index} name={tag}>
+                <DeleteTag
+                  setProjectList={setProjectList}
+                  projectkey={project._id}
+                  tag={tag}
+                />
+              </Tag>
+            ))}
+          </div>
           <button
             className={styles.close_btn}
             onClick={() => setIsVisible(false)}
