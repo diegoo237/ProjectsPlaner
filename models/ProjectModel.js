@@ -17,6 +17,9 @@ const projectSchema = new mongoose.Schema({
     type: [String], // Altera para um array de strings
     default: [],
   },
+  description: {
+    type: String,
+  },
 });
 
 const ProjectModel = mongoose.model("Project", projectSchema);

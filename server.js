@@ -14,6 +14,7 @@ const app = express();
 app.use(express.json({ extended: false }));
 app.use(cors());
 
+// Busca as stations no banco
 app.get("/stations", async (req, res) => {
   try {
     const stations = await ProjectstationModel.find();
@@ -25,6 +26,7 @@ app.get("/stations", async (req, res) => {
   }
 });
 
+// Busca os projetos no banco
 app.get("/projects", async (req, res) => {
   try {
     const projects = await ProjectModel.find();
@@ -34,35 +36,31 @@ app.get("/projects", async (req, res) => {
   }
 });
 
+// Cria um novo projeto
 app.post("/projects", async (req, res) => {
   try {
     const { title, station, prazo } = req.body;
 
     const newProject = new ProjectModel({ title, station, prazo });
-    const savedProject = await newProject.save(); // Salva o projeto e armazena o objeto salvo
+    const savedProject = await newProject.save();
 
-    // Retorna o projeto recém-criado
-    res.status(201).json(savedProject); // Retorna o projeto criado com status 201
+    res.status(201).json(savedProject);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server error while saving data");
   }
 });
 
+// Deleta um projeto
 app.delete("/projects/:id", async (req, res) => {
   const projectId = req.params.id;
-  console.log(`Recebendo solicitação para deletar o projeto: ${projectId}`);
 
-  // Verifica se o ID é um ObjectId válido
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
     return res.status(400).json({ error: "ID do projeto inválido" });
   }
 
   try {
     const deletedProject = await ProjectModel.findByIdAndDelete(projectId);
-
-    // Adicione log para verificar se o projeto foi encontrado e deletado
-    console.log(`Resultado da deleção: ${deletedProject}`);
 
     if (!deletedProject) {
       return res.status(404).json({ error: "Projeto não encontrado" });
@@ -77,15 +75,50 @@ app.delete("/projects/:id", async (req, res) => {
   }
 });
 
-app.put("/projects/:id/tag", async (req, res) => {
-  const { tag } = req.body; // Espera um objeto com a propriedade 'tag'
+// Cria ou atualiza a descrição do projeto
+app.put("/projects/:id/description", async (req, res) => {
+  const { description } = req.body;
   const projectId = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
     return res.status(400).json({ error: "ID do projeto inválido" });
   }
 
-  // Verifica se a tag foi passada como string
+  if (!description || typeof description !== "string") {
+    return res
+      .status(400)
+      .json({ error: "Descrição inválida ou não fornecida" });
+  }
+
+  try {
+    const projectExists = await ProjectModel.findById(projectId);
+    if (!projectExists) {
+      return res.status(404).json({ error: "Projeto não encontrado" });
+    }
+
+    const updatedProject = await ProjectModel.findByIdAndUpdate(
+      projectId,
+      { description }, // Atualiza a descrição
+      { new: true, upsert: true } // upsert cria o documento se não existir
+    );
+
+    res.status(200).json(updatedProject);
+  } catch (error) {
+    console.error("Erro ao criar ou atualizar descrição:", error);
+    res
+      .status(500)
+      .json({
+        error: "Erro ao criar ou atualizar descrição",
+        details: error.message,
+      });
+  }
+});
+
+// Adiciona nova tag ao projeto
+app.put("/projects/:id/tag", async (req, res) => {
+  const { tag } = req.body;
+  const projectId = req.params.id;
+
   if (!tag || typeof tag !== "string") {
     return res.status(400).json({ error: "Tag inválida ou não fornecida" });
   }
@@ -96,10 +129,9 @@ app.put("/projects/:id/tag", async (req, res) => {
       return res.status(404).json({ error: "Projeto não encontrado" });
     }
 
-    // Usa $push para adicionar a nova tag ao array de tags
     const updatedProject = await ProjectModel.findByIdAndUpdate(
       projectId,
-      { $push: { tags: tag } }, // Adiciona a tag ao array
+      { $push: { tags: tag } },
       { new: true }
     );
 
@@ -112,15 +144,11 @@ app.put("/projects/:id/tag", async (req, res) => {
   }
 });
 
+// Remove uma tag do projeto
 app.delete("/projects/:id/tag", async (req, res) => {
-  const { tag } = req.body; // Espera um objeto com a propriedade 'tag'
+  const { tag } = req.body;
   const projectId = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(projectId)) {
-    return res.status(400).json({ error: "ID do projeto inválido" });
-  }
-
-  // Verifica se a tag foi passada como string
   if (!tag || typeof tag !== "string") {
     return res.status(400).json({ error: "Tag inválida ou não fornecida" });
   }
@@ -131,14 +159,12 @@ app.delete("/projects/:id/tag", async (req, res) => {
       return res.status(404).json({ error: "Projeto não encontrado" });
     }
 
-    // Usa $pull para remover a tag do array de tags
     const updatedProject = await ProjectModel.findByIdAndUpdate(
       projectId,
-      { $pull: { tags: tag } }, // Remove a tag do array
+      { $pull: { tags: tag } },
       { new: true }
     );
 
-    // Verifica se a tag foi removida
     if (!updatedProject) {
       return res.status(404).json({ error: "Tag não encontrada" });
     }

@@ -7,7 +7,7 @@ import DeleteTag from "./DeleteTag";
 import xmarkIcon from "../../../assets/xmarkIcon.svg";
 import TrashConfirm from "./TrashConfirm";
 import styles from "./OptionForm.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function OptionForm({
   isVisible,
@@ -17,16 +17,57 @@ function OptionForm({
   setProjectList,
 }) {
   const [trashIsVisible, setTrashIsVisible] = useState(false);
+  const [description, setDescription] = useState(""); // Estado para a descrição
+  const [loading, setLoading] = useState(false); // Estado para loading
+
+  // Carrega a descrição atual quando o componente é montado
+  useEffect(() => {
+    if (project && project.description) {
+      setDescription(project.description); // Define a descrição atual
+    }
+  }, [project]);
 
   const toggleVisibility = () => {
     setTrashIsVisible((prevIsVisible) => !prevIsVisible);
   };
 
   let tagsArray = [];
-
   if (project.tags) {
     tagsArray = Object.values(project.tags);
   }
+
+  // Função para enviar a nova descrição
+  const handleUpdateDescription = async (e) => {
+    e.preventDefault();
+
+    const url = `http://localhost:5000/projects/${project._id}/description`;
+
+    try {
+      setLoading(true); // Inicia o loading
+      const response = await fetch(url, {
+        method: "PUT", // Sempre utiliza PUT
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ description }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ao atualizar descrição: ${response.statusText}`);
+      }
+
+      const updatedProject = await response.json();
+      setProjectList((prevList) =>
+        prevList.map((p) => (p._id === updatedProject._id ? updatedProject : p))
+      );
+      alert("Descrição atualizada com sucesso!");
+    } catch (error) {
+      console.error("Erro:", error);
+      alert("Não foi possível atualizar a descrição.");
+    } finally {
+      setLoading(false); // Finaliza o loading
+    }
+  };
 
   return (
     <>
@@ -37,7 +78,6 @@ function OptionForm({
         <header>
           <div>
             <h1>{project.title}</h1>
-
             {tagsArray.map((tag, index) => (
               <Tag key={index} name={tag}>
                 <DeleteTag
@@ -52,7 +92,7 @@ function OptionForm({
             className={styles.close_btn}
             onClick={() => setIsVisible(false)}
           >
-            <img src={xmarkIcon} />
+            <img src={xmarkIcon} alt="Close" />
           </button>
         </header>
 
@@ -61,11 +101,18 @@ function OptionForm({
           <TagBtn setProjectList={setProjectList} projectkey={project._id} />
           <DropDown />
         </span>
-        <p>Descriçao do projeto</p>
-        <textarea></textarea>
+        <p>Descrição do projeto</p>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)} // Atualiza a descrição no estado
+          rows="5"
+          cols="50"
+        />
         <p>Alterar Data</p>
-        <input type="date"></input>
-        <button className={styles.btn}>Save</button>
+        <input type="date" />
+        <button onClick={handleUpdateDescription} className={styles.btn}>
+          {loading ? "Salvando..." : "Save"} {/* Exibe texto de loading */}
+        </button>
         <TrashConfirm
           trashIsVisible={trashIsVisible}
           toggleVisibility={toggleVisibility}
