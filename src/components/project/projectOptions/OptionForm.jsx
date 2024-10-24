@@ -17,13 +17,26 @@ function OptionForm({
   setProjectList,
 }) {
   const [trashIsVisible, setTrashIsVisible] = useState(false);
-  const [description, setDescription] = useState(""); // Estado para a descrição
-  const [loading, setLoading] = useState(false); // Estado para loading
+  const [description, setDescription] = useState("");
+  const [prazo, setPrazo] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [station, setStation] = useState("");
 
-  // Carrega a descrição atual quando o componente é montado
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    date.setUTCHours(date.getUTCHours() + new Date().getTimezoneOffset() / 60);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  // Carrega a descrição e o prazo atuais quando o componente é montado
   useEffect(() => {
-    if (project && project.description) {
-      setDescription(project.description); // Define a descrição atual
+    if (project) {
+      setDescription(project.description || "");
+      setPrazo(formatDate(project.prazo) || "");
+      setStation(project.station || "");
     }
   }, [project]);
 
@@ -36,37 +49,49 @@ function OptionForm({
     tagsArray = Object.values(project.tags);
   }
 
-  // Função para enviar a nova descrição
-  const handleUpdateDescription = async (e) => {
+  // Função para enviar as atualizações do projeto
+  const handleUpdateProject = async (e) => {
     e.preventDefault();
 
-    const url = `http://localhost:5000/projects/${project._id}/description`;
+    if (loading) {
+      return; // Evita que a função seja executada novamente enquanto o loading está ativo
+    }
+
+    const url = `http://localhost:5000/projects/${project._id}`;
+
+    // Cria um objeto com as informações que serão atualizadas
+    const updatedData = {
+      description,
+      prazo,
+      station,
+    };
 
     try {
       setLoading(true); // Inicia o loading
       const response = await fetch(url, {
-        method: "PUT", // Sempre utiliza PUT
+        method: "PUT", // Sempre utiliza PUT para atualizar
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ description }),
+        body: JSON.stringify(updatedData),
       });
 
       if (!response.ok) {
-        throw new Error(`Erro ao atualizar descrição: ${response.statusText}`);
+        throw new Error(`Erro ao atualizar projeto: ${response.statusText}`);
       }
 
       const updatedProject = await response.json();
       setProjectList((prevList) =>
         prevList.map((p) => (p._id === updatedProject._id ? updatedProject : p))
       );
-      alert("Descrição atualizada com sucesso!");
+      alert("Projeto atualizado com sucesso!");
     } catch (error) {
       console.error("Erro:", error);
-      alert("Não foi possível atualizar a descrição.");
+      alert("Não foi possível atualizar o projeto.");
     } finally {
       setLoading(false); // Finaliza o loading
     }
+    loading ? "" : setIsVisible(false);
   };
 
   return (
@@ -99,7 +124,7 @@ function OptionForm({
         <span>
           <TrashBtn toggleVisibility={toggleVisibility} />
           <TagBtn setProjectList={setProjectList} projectkey={project._id} />
-          <DropDown />
+          <DropDown station={station} setStation={setStation} />
         </span>
         <p>Descrição do projeto</p>
         <textarea
@@ -108,10 +133,14 @@ function OptionForm({
           rows="5"
           cols="50"
         />
-        <p>Alterar Data</p>
-        <input type="date" />
-        <button onClick={handleUpdateDescription} className={styles.btn}>
-          {loading ? "Salvando..." : "Save"} {/* Exibe texto de loading */}
+        <p>Alterar Prazo</p>
+        <input
+          type="date"
+          value={prazo}
+          onChange={(e) => setPrazo(e.target.value)} // Atualiza o prazo no estado
+        />
+        <button onClick={handleUpdateProject} className={styles.btn}>
+          {loading ? "Salvando..." : "Save"}
         </button>
         <TrashConfirm
           trashIsVisible={trashIsVisible}

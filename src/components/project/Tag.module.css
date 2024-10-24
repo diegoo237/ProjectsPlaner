@@ -1,14 +1,14 @@
 .tag {
   background-color: brown;
-
-  border-radius: 0.4rem;
-  padding: 0.2rem 0.6rem;
   width: fit-content;
+  border-radius: 0.4rem;
 
-  font-size: 1rem;
-  color: #fff;
+  padding: 0.2rem 0.6rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  font-size: 1rem;
+  color: #fff;
 }

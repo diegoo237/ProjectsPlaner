@@ -76,18 +76,12 @@ app.delete("/projects/:id", async (req, res) => {
 });
 
 // Cria ou atualiza a descrição do projeto
-app.put("/projects/:id/description", async (req, res) => {
-  const { description } = req.body;
+app.put("/projects/:id", async (req, res) => {
+  const { description, prazo, station } = req.body;
   const projectId = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
     return res.status(400).json({ error: "ID do projeto inválido" });
-  }
-
-  if (!description || typeof description !== "string") {
-    return res
-      .status(400)
-      .json({ error: "Descrição inválida ou não fornecida" });
   }
 
   try {
@@ -98,19 +92,17 @@ app.put("/projects/:id/description", async (req, res) => {
 
     const updatedProject = await ProjectModel.findByIdAndUpdate(
       projectId,
-      { description }, // Atualiza a descrição
-      { new: true, upsert: true } // upsert cria o documento se não existir
+      { description, prazo, station }, // Atualiza os campos description e prazo
+      { new: true, upsert: true } // Opções: retorna o novo documento atualizado e faz upsert
     );
 
     res.status(200).json(updatedProject);
   } catch (error) {
-    console.error("Erro ao criar ou atualizar descrição:", error);
-    res
-      .status(500)
-      .json({
-        error: "Erro ao criar ou atualizar descrição",
-        details: error.message,
-      });
+    console.error("Erro ao atualizar o projeto:", error);
+    res.status(500).json({
+      error: "Erro ao atualizar o projeto",
+      details: error.message,
+    });
   }
 });
 

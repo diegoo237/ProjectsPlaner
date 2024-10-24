@@ -1,12 +1,14 @@
 .btn {
   background-color: #fff;
+  height: 3.5rem;
+  width: 8rem;
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 1rem;
-  width: 8rem;
+
   font-size: 13px;
-  height: 3.5rem;
 }
 .btn:hover {
   cursor: pointer;

@@ -1,11 +1,17 @@
 .dashContent {
+  background-color: #495057;
+  height: 100vh;
+
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  height: 86vh;
+  gap: 2rem;
 }
 .dashContent div {
-  background-color: rgba(0, 0, 0, 0.648);
+  margin-top: 3rem;
+
+  background-color: #fff;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
   padding: 3rem;
 
   display: flex;
@@ -14,8 +20,8 @@
   align-items: center;
 }
 .dashContent p {
-  font-size: 2rem;
+  font-size: 1.3rem;
 }
 .dashContent h1 {
-  font-size: 7rem;
+  font-size: 4rem;
 }

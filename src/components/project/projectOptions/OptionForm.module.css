@@ -1,17 +1,16 @@
 .options {
-  display: grid;
-
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  padding: 2rem;
-
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
-
   background-color: #fff;
   border-radius: 1rem;
+
+  padding: 2rem;
+
+  display: grid;
   gap: 1rem;
 }
 .options header {
@@ -19,9 +18,9 @@
 }
 
 .options header div {
+  display: flex;
   justify-content: center;
   align-items: center;
-  display: flex;
   gap: 0.3rem;
 }
 .options header div h1 {
@@ -29,15 +28,18 @@
 }
 
 .options textarea {
-  padding: 0.4rem;
   margin-top: -1rem;
-  border: solid 1px black;
+
   min-width: 50rem;
   min-height: 20rem;
+  border: solid 1px black;
   resize: none;
+
+  padding: 0.4rem;
 }
 .options input {
   margin-top: -1rem;
+
   width: 12rem;
   border: 1px solid black;
 }
@@ -47,7 +49,9 @@
 .btn {
   background-color: var(--color-light--1);
   border-radius: 5px;
+
   padding: 1rem;
+
   cursor: pointer;
 }
 .btn:hover {
@@ -57,10 +61,12 @@
   width: 2rem;
 }
 .close_btn {
-  display: flex;
   background-color: #fff;
-  padding: 0.5rem;
   border-radius: 50%;
+
+  padding: 0.5rem;
+
+  display: flex;
 }
 .close_btn:hover {
   background-color: var(--hover-light--1);

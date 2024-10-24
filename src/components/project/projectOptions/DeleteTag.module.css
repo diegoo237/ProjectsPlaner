@@ -1,7 +1,9 @@
 .btn {
   cursor: pointer;
-  display: flex;
+
   margin-left: 0.2rem;
+
+  display: flex;
   align-items: center;
   justify-content: center;
 }

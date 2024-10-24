@@ -13,6 +13,8 @@ function Project({ project, setProjectList }) {
 
   const date = new Date(project.prazo);
 
+  date.setUTCHours(date.getUTCHours() + new Date().getTimezoneOffset() / 60);
+
   // Formataando a data
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString("pt-BR", options);

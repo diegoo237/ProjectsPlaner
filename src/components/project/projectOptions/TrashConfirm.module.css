@@ -1,27 +1,31 @@
 .conteiner {
-  background-color: #efeeee;
-  box-shadow: 2px 1px 3px rgba(0, 0, 0, 0.191);
-  border-radius: 1rem;
-  width: 40rem;
-  padding: 3rem;
-
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
+
+  width: 40rem;
+  background-color: #efeeee;
+  box-shadow: 2px 1px 3px rgba(0, 0, 0, 0.191);
+  border-radius: 1rem;
+
+  padding: 3rem;
 
   font-size: 1.5rem;
 }
 .btn_box {
   display: flex;
   gap: 1rem;
+
   margin-top: 1rem;
 }
 .btn_box button {
+  border-radius: 0.5rem;
+
   padding: 1rem;
+
   font-weight: 600;
   color: #fff;
-  border-radius: 0.5rem;
 }
 .confirm {
   background-color: #2b8a3e;

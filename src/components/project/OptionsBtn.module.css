@@ -1,12 +1,15 @@
 .btn {
   background-color: #fff;
+
+  grid-column: 2;
+  grid-row: 1;
+
   padding: 0.5rem;
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  grid-column: 2;
-  grid-row: 1;
 }
 .btn:hover {
   cursor: pointer;

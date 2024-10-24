@@ -1,13 +1,15 @@
 .project {
-  border-radius: 0.4rem;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
   width: 100%;
+  border-radius: 0.4rem;
   background-color: #fff;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.191);
 }
 .content {
   min-height: 5rem;
+
   display: flex;
   flex-direction: column;
+
   padding: 1.5rem;
 }
 .content header {
@@ -35,16 +37,19 @@
 .title {
   grid-row: 2/3;
   grid-column: 1;
+
   font-size: 1.3rem;
   font-weight: 100;
 }
 
 .project footer {
-  border-top: solid 0.8px rgba(0, 0, 0, 0.109);
   height: 3.2rem;
+  border-top: solid 0.8px rgba(0, 0, 0, 0.109);
+
   display: flex;
   align-items: center;
   gap: 1rem;
+
   padding: 1.5rem;
 }
 .project footer img {
@@ -56,12 +61,14 @@
   gap: 1rem;
 }
 .prazo_late {
+  border-radius: 0.3rem;
+  background-color: var(--color-brand--1);
+
   display: flex;
   align-items: center;
   gap: 1rem;
+
   padding: 0.2rem 0.5rem;
-  border-radius: 0.3rem;
-  background-color: var(--color-brand--1);
 }
 @media only screen and (max-width: 983px) {
   .project {

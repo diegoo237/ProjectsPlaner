@@ -1,9 +1,9 @@
 .container {
-  padding: 1.5rem;
-  padding-bottom: 0;
-
   width: 30rem;
   height: auto;
+
+  padding: 1.5rem;
+  padding-bottom: 0;
 
   display: flex;
   flex-direction: column;
