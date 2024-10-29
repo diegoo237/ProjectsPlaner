@@ -5,6 +5,9 @@ import dotenv from "dotenv";
 import ProjectModel from "./models/ProjectModel.js";
 import ProjectstationModel from "./models/ProjectstationModel.js";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt"; // Alterado para import
+import jwt from "jsonwebtoken"; // Alterado para import
+import User from "./models/UserModel.js"; // Alterado para import
 
 dotenv.config();
 
@@ -13,6 +16,62 @@ connectDB();
 const app = express();
 app.use(express.json({ extended: false }));
 app.use(cors());
+const SECRET_KEY = "sua_chave_secreta";
+
+// Rota para criar um novo usuário
+app.post("/users", async (req, res) => {
+  const { username, password } = req.body;
+
+  // Verifica se o usuário já existe
+  const existingUser = await User.findOne({ username });
+  if (existingUser) {
+    return res.status(400).json({ message: "Usuário já existe" });
+  }
+
+  // Criptografa a senha
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Cria um novo usuário
+  const newUser = new User({ username, password: hashedPassword });
+
+  try {
+    const savedUser = await newUser.save();
+    res
+      .status(201)
+      .json({ message: "Usuário criado com sucesso", user: savedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao criar usuário", error });
+  }
+});
+
+//verifica o login
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  User.findOne({ username })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: "Usuário não encontrado" });
+      }
+      bcrypt
+        .compare(password, user.password)
+        .then((isMatch) => {
+          if (!isMatch) {
+            return res.status(400).send({ message: "Senha incorreta" });
+          }
+          const token = jwt.sign({ id: user._id }, SECRET_KEY, {
+            expiresIn: "1h",
+          });
+          res.send({ token });
+        })
+        .catch((error) => {
+          res.status(500).send({ message: "Erro ao verificar a senha", error });
+        });
+    })
+    .catch((e) => {
+      res.status(500).send({ message: "Erro ao buscar o usuário", e });
+    });
+});
 
 // Busca as stations no banco
 app.get("/stations", async (req, res) => {

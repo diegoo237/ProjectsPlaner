@@ -1,5 +1,4 @@
 import styles from "./ProjectsPage.module.css";
-import AppNav from "../components/AppNav";
 import ProjectStation from "../components/ProjectStation";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -33,19 +32,16 @@ function ProjectPage() {
   }, []);
 
   return (
-    <>
-      <AppNav />
-      <main className={styles.main}>
-        {stationList.map((station) => (
-          <ProjectStation
-            key={station._id}
-            station={station.station}
-            projects={projectList}
-            setProjectList={setProjectList}
-          />
-        ))}
-      </main>
-    </>
+    <main className={styles.main}>
+      {stationList.map((station) => (
+        <ProjectStation
+          key={station._id}
+          station={station.station}
+          projects={projectList}
+          setProjectList={setProjectList}
+        />
+      ))}
+    </main>
   );
 }
 

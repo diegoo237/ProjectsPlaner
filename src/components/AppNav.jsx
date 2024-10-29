@@ -1,7 +1,8 @@
+import PropTypes from "prop-types";
 import styles from "./AppNav.module.css";
 import { NavLink } from "react-router-dom";
 
-function AppNav() {
+function AppNav({ logout }) {
   return (
     <nav className={styles.nav}>
       <NavLink to="/">
@@ -14,8 +15,12 @@ function AppNav() {
         <NavLink to="/projects">
           <h3>Planer</h3>
         </NavLink>
+        <h3 onClick={logout}>Log-out</h3>
       </ul>
     </nav>
   );
 }
 export default AppNav;
+AppNav.propTypes = {
+  logout: PropTypes.func.isRequired,
+};

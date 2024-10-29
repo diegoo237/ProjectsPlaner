@@ -1,0 +1,11 @@
+.loginPage {
+  height: 100vh;
+  background-color: #282828;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.loginPage img {
+  height: 100%;
+}
