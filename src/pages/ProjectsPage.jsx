@@ -21,13 +21,26 @@ function ProjectPage() {
 
   useEffect(() => {
     const fetchProjects = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token não encontrado");
+        return;
+      }
+
       try {
-        const response = await axios.get("http://35.199.72.143:5000/projects");
+        // Faz a requisição para buscar projetos, passando o token no cabeçalho
+        const response = await axios.get("http://35.199.72.143:5000/projects", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setProjectList(response.data);
       } catch (error) {
         console.error("Erro ao buscar os projetos:", error);
       }
     };
+
     fetchProjects();
   }, []);
 

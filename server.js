@@ -18,6 +18,19 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 const SECRET_KEY = "sua_chave_secreta";
 
+const authenticate = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader)
+    return res.status(401).json({ message: "Token não fornecido" });
+
+  const token = authHeader.split(" ")[1]; // Extraindo o token do cabeçalho
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Token inválido" });
+    req.userId = decoded.id; // Salvando o ID do usuário na requisição
+    next();
+  });
+};
+
 // Rota para criar um novo usuário
 app.post("/users", async (req, res) => {
   const { username, password } = req.body;
@@ -86,27 +99,39 @@ app.get("/stations", async (req, res) => {
 });
 
 // Busca os projetos no banco
-app.get("/projects", async (req, res) => {
+app.get("/projects", authenticate, async (req, res) => {
   try {
-    const projects = await ProjectModel.find();
+    const projects = await ProjectModel.find({ userId: req.userId });
     res.status(200).json(projects);
   } catch (error) {
-    res.status(500).json({ message: "Erro ao buscar os projetos", error });
+    console.error("Erro ao buscar os projetos:", error);
+    return res.status(500).json({ message: "Erro ao buscar os projetos" });
   }
 });
 
 // Cria um novo projeto
 app.post("/projects", async (req, res) => {
+  const { title, station, prazo } = req.body;
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) return res.status(403).json({ message: "Token não fornecido" });
+
   try {
-    const { title, station, prazo } = req.body;
-
-    const newProject = new ProjectModel({ title, station, prazo });
+    const decoded = jwt.verify(token, SECRET_KEY);
+    const newProject = new ProjectModel({
+      title,
+      station,
+      prazo,
+      userId: decoded.id,
+    });
     const savedProject = await newProject.save();
-
+    console.log("Projeto salvo:", savedProject); // Log da resposta
     res.status(201).json(savedProject);
   } catch (error) {
-    console.log(error.message);
-    res.status(500).send("Server error while saving data");
+    console.error("Erro ao salvar projeto:", error); // Log detalhado do erro
+    res
+      .status(500)
+      .json({ message: "Erro ao salvar projeto", error: error.message });
   }
 });
 

@@ -13,6 +13,10 @@ const projectSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   tags: {
     type: [String], // Altera para um array de strings
     default: [],
@@ -20,7 +24,6 @@ const projectSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 const ProjectModel = mongoose.model("Project", projectSchema);

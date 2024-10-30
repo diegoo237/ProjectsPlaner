@@ -21,12 +21,30 @@ function AdProjectForm({
     }
 
     const newTask = { title, station, prazo };
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token não encontrado no localStorage");
+      return;
+    }
 
     try {
-      await axios.post("http://35.199.72.143:5000/projects", newTask);
-      // Faça uma nova requisição para buscar a lista atualizada de projetos
-      const response = await axios.get("http://35.199.72.143:5000/projects");
+      await axios.post("http://localhost:5000/projects", newTask, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Requisição para obter a lista atualizada de projetos do usuário
+      const response = await axios.get("http://localhost:5000/projects", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setProjectList(response.data);
+
+      // Limpa os campos e fecha o formulário
       setTitle("");
       setPrazo("");
       setIsVisible(false);

@@ -49,7 +49,8 @@ function LoginPage({ setToken }) {
           return;
         }
         setToken(response);
-        localStorage.setItem("token", JSON.stringify(response));
+        const token = response.token;
+        localStorage.setItem("token", token);
       }
     } catch (error) {
       console.error("Erro ao realizar a operação:", error);
